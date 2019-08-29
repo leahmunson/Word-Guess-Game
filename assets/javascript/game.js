@@ -1,4 +1,4 @@
-// Before coding any functions, set up global-level game logic/variables
+// Before coding any functions, set up global-level game variables
     // Set up list of words
     var selectableWords =           
         [
@@ -7,12 +7,12 @@
             "document",
             "puppy",
             "javascript",
-            "ansic",
-            "cobol",
-            "fortran",
-            "visualbasic",
-            "compiler",
-            "algorithm",
+            "seattle",
+            "table",
+            "watch",
+            "washington",
+            "table",
+            "coffee",
         ];
 
     // Define maximum number of tries player has
@@ -30,38 +30,31 @@
     // How many tries the player has left
     var remainingGuesses = 0;   
 
-    // Flag to tell if the game has started
+    // How to tell if the game has started
     var gameStarted = false;
 
-    // Flag for 'press any key to try again'
+    // Say 'press any key to try again'
     var hasFinished = false;  
 
     // How many wins has the player racked up
     var wins = 0;
 
-// Create a function to reset game variables
+// Create a function to reset game 
 function resetGame() {
     remainingGuesses = maxTries;
     gameStarted = false;
 
-    // Use Math.floor to round the random number down to the nearest whole.
+    // Round the random number down to the nearest whole number
     currentWordIndex = Math.floor(Math.random() * (selectableWords.length));
 
     // Clear out arrays
     guessedLetters = [];
     guessingWord = [];
 
-    // Make sure the hangman image is cleared
-    document.getElementById("hangmanImage").src = "";
-
     // Build the guessing word and clear it out
     for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
         guessingWord.push("_");
     }
-    // Hide game over and win images/text
-    document.getElementById("pressKeyTryAgain").style.cssText= "display: none";
-    document.getElementById("gameover-image").style.cssText = "display: none";
-    document.getElementById("youwin-image").style.cssText = "display: none";
 
     // Show display
     updateDisplay();
@@ -69,14 +62,16 @@ function resetGame() {
 
 //  Update the display on the HTML Page
 function updateDisplay() {
-
     document.getElementById("totalWins").innerText = wins;
     document.getElementById("currentWord").innerText = "";
+
     for (var i = 0; i < guessingWord.length; i++) {
-        document.getElementById("currentWord").innerText += guessingWord[i];
+        document.getElementById("currentWord").innerText += guessingWord[i]; //add
     }
+    
     document.getElementById("remainingGuesses").innerText = remainingGuesses;
     document.getElementById("guessedLetters").innerText = guessedLetters;
+
     if(remainingGuesses <= 0) {
         document.getElementById("gameover-image").style.cssText = "display: block";
         document.getElementById("pressKeyTryAgain").style.cssText = "display:block";
@@ -85,13 +80,13 @@ function updateDisplay() {
 };
 
 // Update the image depending on how many guesses
-function updateHangmanImage() {
-    document.getElementById("hangmanImage").src = "assets/images/" + (maxTries - remainingGuesses) + ".png";
+function updateDisplay() {
+    document.getElementById("resultimage").src = //insert "wrong"
 };
 
 // Create an Event Listener to run the game
 document.onkeydown = function(event) {
-    // If we finished a game, dump one keystroke and reset.
+    // If you finish the game and need to reset
     if(hasFinished) {
         resetGame();
         hasFinished = false;
@@ -115,18 +110,17 @@ function makeGuess(letter) {
             evaluateGuess(letter);
         }
     }
-    
     updateDisplay();
     checkWin();
 };
 
-// This function takes a letter and finds all instances of 
-// appearance in the string and replaces them in the guess word.
+// Create a function that takes a letter and finds all instances of appearance in the string and replaces them in the word being guessed.
+
 function evaluateGuess(letter) {
     // Array to store positions of letters in string
     var positions = [];
 
-    // Loop through word finding all instances of guessed letter, store the indicies in an array.
+    // For loop to finding all instances of guessed letter in a word and store in array
     for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
         if(selectableWords[currentWordIndex][i] === letter) {
             positions.push(i);
@@ -136,7 +130,7 @@ function evaluateGuess(letter) {
     // if there are no indicies, remove a guess and update the hangman image
     if (positions.length <= 0) {
         remainingGuesses--;
-        updateHangmanImage();
+
     } else {
         // Loop through all the indicies and replace the '_' with a letter.
         for(var i = 0; i < positions.length; i++) {
@@ -152,4 +146,4 @@ function checkWin() {
         wins++;
         hasFinished = true;
     }
-};
+}
