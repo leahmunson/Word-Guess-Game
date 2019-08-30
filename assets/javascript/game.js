@@ -71,7 +71,7 @@ function updateDisplay() {
 
     if(remainingGuesses <= 0) {
         alert("GAMEOVER!");
-        alert("try again!");
+        alert("Try again!");
         hasFinished = true;
     }
 };
@@ -133,7 +133,7 @@ function evaluateGuess(letter) {
 
 function checkWin() {
     if(guessingWord.indexOf("_") === -1) {
-        alert("YOU WIN!");
+        alert("YOU WIN! Thanks for playing! :) ");
         wins++;
         hasFinished = true;
     }
