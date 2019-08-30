@@ -1,47 +1,44 @@
 // Before coding any functions, set up global-level game variables
-    // Set up list of words
-    var selectableWords =           
-        [
-            "hello",
-            "computer",
-            "document",
-            "puppy",
-            "javascript",
-            "seattle",
-            "table",
-            "watch",
-            "washington",
-            "table",
-            "coffee",
-        ];
+// Set up list of words
+var selectableWords =           
+    [
+        "hello",
+        "computer",
+        "document",
+        "puppy",
+        "javascript",
+        "seattle",
+        "table",
+        "watch",
+        "washington",
+        "table",
+        "coffee",
+    ];        
 
-    // Define maximum number of tries player has
-    const maxTries = 10;            
+// Store the letters the user guessed
+var guessedLetters = [];       
 
-    // Store the letters the user guessed
-    var guessedLetters = [];       
+// Index of the current word in the array
+var currentWordIndex;    
 
-    // Index of the current word in the array
-    var currentWordIndex;    
-    
-    // Define the word we actually build to match the current word
-    var guessingWord = [];  
+// Define the word we actually build to match the current word
+var guessingWord = [];  
 
-    // How many tries the player has left
-    var remainingGuesses = 0;   
+// How many tries the player has left
+var remainingGuesses = 10;   
 
-    // How to tell if the game has started
-    var gameStarted = false;
+// How to tell if the game has started
+var gameStarted = false;
 
-    // Say 'press any key to try again'
-    var hasFinished = false;  
+// Say 'press any key to try again'
+var hasFinished = false;  
 
-    // How many wins has the player racked up
-    var wins = 0;
+// How many wins has the player racked up
+var wins = 0;
 
 // Create a function to reset game 
 function resetGame() {
-    remainingGuesses = maxTries;
+    remainingGuesses = 10;
     gameStarted = false;
 
     // Round the random number down to the nearest whole number
@@ -60,28 +57,23 @@ function resetGame() {
     updateDisplay();
 };
 
-//  Update the display on the HTML Page
+//  Update the HTML Page
 function updateDisplay() {
     document.getElementById("totalWins").innerText = wins;
     document.getElementById("currentWord").innerText = "";
 
     for (var i = 0; i < guessingWord.length; i++) {
-        document.getElementById("currentWord").innerText += guessingWord[i]; //add
+        document.getElementById("currentWord").innerText += guessingWord[i];
     }
     
     document.getElementById("remainingGuesses").innerText = remainingGuesses;
     document.getElementById("guessedLetters").innerText = guessedLetters;
 
     if(remainingGuesses <= 0) {
-        document.getElementById("gameover-image").style.cssText = "display: block";
-        document.getElementById("pressKeyTryAgain").style.cssText = "display:block";
+        alert("GAMEOVER!");
+        alert("try again!");
         hasFinished = true;
     }
-};
-
-// Update the image depending on how many guesses
-function updateDisplay() {
-    document.getElementById("resultimage").src = //insert "wrong"
 };
 
 // Create an Event Listener to run the game
@@ -100,6 +92,7 @@ document.onkeydown = function(event) {
 
 function makeGuess(letter) {
     if (remainingGuesses > 0) {
+
         if (!gameStarted) {
             gameStarted = true;
         }
@@ -119,7 +112,6 @@ function makeGuess(letter) {
 function evaluateGuess(letter) {
     // Array to store positions of letters in string
     var positions = [];
-
     // For loop to finding all instances of guessed letter in a word and store in array
     for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
         if(selectableWords[currentWordIndex][i] === letter) {
@@ -141,9 +133,10 @@ function evaluateGuess(letter) {
 
 function checkWin() {
     if(guessingWord.indexOf("_") === -1) {
-        document.getElementById("youwin-image").style.cssText = "display: block";
-        document.getElementById("pressKeyTryAgain").style.cssText= "display: block";
+        alert("YOU WIN!");
         wins++;
         hasFinished = true;
     }
 }
+
+resetGame();
